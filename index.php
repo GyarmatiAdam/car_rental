@@ -1,3 +1,5 @@
+<?php require 'connection.php';?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -44,39 +46,19 @@
     </form>
   </div>
 </nav>
-
-  <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "cr09_adam_gyarmati-carrental";
-
-// Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    } 
-
-
-    $sql = "SELECT first_name, last_name, YEAR(CURDATE()) - YEAR(dob) AS age 
-    FROM customers";
-    $result = $conn->query($sql);
-    $row = mysqli_fetch_assoc($result);
-
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = mysqli_fetch_assoc($result)) {
-            echo "Name: " . $row["first_name"]. "  " . $row["last_name"]. " Age:" . $row["age"]. "<br>";
-        }
-    } else {
-        echo "No results";
-    }
-
-    $conn->close();
-?>
-
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-7">
+                <table class="table">
+<!--Including view file-->
+                    <?php require 'view.php';?>
+                </div>
+                <div class="col-sm-4">
+                </div>
+            </div>
+        </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -84,3 +66,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
+
+<?php
+//Close connection with DB
+    $conn->close();
+?>
